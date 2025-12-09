@@ -1,0 +1,79 @@
+import turtle
+import time
+
+wn = turtle.Screen()
+wn.tracer(0)
+
+lake = turtle.Turtle()
+lake.hideturtle()
+lake.speed(0)
+
+rippler = turtle.Turtle()
+rippler.hideturtle()
+rippler.speed(0)
+
+def draw_ripple(t):
+    t.pencolor("white")
+    t.pensize(4)
+    t.setheading(30)
+    t.circle(40, 25)
+    t.setheading(330)
+    t.circle(40, 25)
+
+def draw_lake():
+    lake.penup()
+    lake.pencolor("blue")
+    lake.goto(-50, -100)
+    lake.pendown()
+
+    lake.setheading(180)
+    lake.fillcolor("blue")
+    lake.begin_fill()
+    lake.circle(40, 180)
+    lake.forward(150)
+    lake.circle(40, 180)
+    lake.forward(150)
+    lake.end_fill()
+
+# Initial ripple positions
+ripple_positions = [
+    (-60, -135),
+    (5, -135),
+    (70, -135),
+    (-55, -145),
+    (10, -145),
+    (75, -145),
+    (-50, -155),
+    (15, -155),
+    (80, -155)
+]
+
+draw_lake()
+
+dx = 1  # speed of ripples to the right
+
+# Lake boundaries (Keep ripples fully inside)
+left_limit  = -85   # Left boundary
+right_limit = 105   # Right boundary
+
+while True:
+    rippler.clear()
+
+    for i, (x, y) in enumerate(ripple_positions):
+
+        x += dx  # move ripple right
+
+        # If ripple goes too far right, start back on left side:
+        if x > right_limit:
+            x = left_limit
+
+        # Draw ripple
+        rippler.penup()
+        rippler.goto(x, y)
+        rippler.pendown()
+        draw_ripple(rippler)
+
+        ripple_positions[i] = (x, y)
+
+    wn.update()
+    time.sleep(0.02)
