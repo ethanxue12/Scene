@@ -1,0 +1,181 @@
+import turtle
+import time
+import random
+
+wn = turtle.Screen()
+
+# function for drawing equilateral triangles as the mountains
+def draw_mountain(t, side):
+  for i in range(3):
+    t.forward(side)
+    t.left(120)
+  
+  
+  
+    
+mountain = turtle.Turtle()
+mountain.penup()
+
+
+mountain.pensize(2)
+
+mountain.penup()
+mountain.goto(-200, 35)
+mountain.pendown()
+# third mountain range behind the second, slightly lighter in color
+sidelength_3 = [100, 95, 125, 85, 65]# list of side lengths of mountain range
+height_change_3 = [0, -5, 12, 7, 5]# list of height changes between mountains(up or down)
+
+# every mountain has a various side lengths determined by the list above
+
+# will repeat the drawing triangle process until the list of sidelengths ends
+for side in sidelength_3:
+  mountain.pencolor("light gray")
+  mountain.fillcolor("light gray")
+  mountain.begin_fill()
+  draw_mountain(mountain, side)
+  mountain.penup()
+  mountain.end_fill()
+  # go to top of mountain
+  for i in range(2):
+    mountain.forward(side)
+    mountain.left(120)
+  # draw snow cap
+  mountain.fillcolor("white")
+  mountain.begin_fill()
+  draw_mountain(mountain, side / 6)
+  mountain.penup()
+  mountain.end_fill()
+  # go back to starting corner of mountain
+  mountain.forward(side)
+  mountain.left(120)
+  # retrace outline to add shades
+  
+ 
+    
+  # move to position to draw next mountain
+  mountain.forward(side - 40)
+  mountain.left(90)
+  select_height = height_change_3.pop()# pops an item out of the height_change list
+  mountain.forward(select_height)
+  mountain.right(90)
+  mountain.pendown()
+  
+ 
+  
+# second mountain range, behind the first
+mountain.penup()
+mountain.goto(-200, -10)
+mountain.pendown()
+sidelength_2 = [120, 130, 110, 100, 65] 
+height_change_2 = [0, -10, 10, 5, 20]
+
+for side in sidelength_2:
+  mountain.pencolor("#A9A9A9")
+  mountain.fillcolor("#A9A9A9")
+  mountain.begin_fill()
+  draw_mountain(mountain, side)
+  mountain.penup()
+  mountain.end_fill()
+  # go to top of mountain
+  for i in range(2):
+    mountain.forward(side)
+    mountain.left(120)
+  # draw snow cap
+  mountain.fillcolor("white")
+  mountain.begin_fill()
+  draw_mountain(mountain, side / 6)
+  mountain.penup()
+  mountain.end_fill()
+  # go back to starting corner of mountain
+  mountain.forward(side)
+  mountain.left(120)
+  # move to next mountain
+  mountain.forward(side - 40)
+  mountain.left(90)
+  select_height = height_change_2.pop()
+  mountain.forward(select_height)
+  mountain.right(90)
+  mountain.pendown()
+  
+# first mountainn range
+
+mountain.penup()
+mountain.goto(-190, -25)
+mountain.pendown()
+sidelength_1 = [130, 150, 135, 95]
+height_change_1 = [0, 10, -5, 15]
+
+for side in sidelength_1:
+  mountain.pencolor("gray")
+  mountain.fillcolor("gray")
+  mountain.begin_fill()
+  draw_mountain(mountain, side)
+  mountain.penup()
+  mountain.end_fill()
+  # go to top of mountain
+  for i in range(2):
+    mountain.forward(side)
+    mountain.left(120)
+  # draw snow cap
+  mountain.fillcolor("white")
+  mountain.begin_fill()
+  draw_mountain(mountain, side / 6)
+  mountain.penup()
+  mountain.end_fill()
+  # go back to starting corner of mountain
+  mountain.forward(side)
+  mountain.left(120)
+  # move to next mountain
+  mountain.forward(side - 45)
+  mountain.left(90)
+  select_height = height_change_1.pop()
+  mountain.forward(select_height)
+  mountain.right(90)
+  mountain.pendown()
+
+
+# make snowfall
+
+wn.tracer(0)
+
+num_flakes = 50
+flakes = []
+
+for _ in range(num_flakes):
+    flake = turtle.Turtle()
+    flake.hideturtle()
+    flake.penup()
+    flake.speed(0)
+    flake.color("white")
+
+    # random flake size will be stored
+    flake.size = random.randint(2, 4)
+
+    # random start position
+    flake.goto(random.randint(-300, 300), random.randint(100, 300))
+
+    flakes.append(flake)
+
+def snowfall():
+    for flake in flakes:
+        flake.clear() # erase dot
+        flake.sety(flake.ycor() - random.randint(1, 3)) # fall animation
+
+        # reset if below bottom
+        if flake.ycor() < -200:
+            flake.goto(random.randint(-300, 300),
+                       random.randint(200, 350))
+
+        flake.dot(flake.size, "white")      # redraw dot
+
+    wn.update()
+    wn.ontimer(snowfall, 30)  # repeat
+
+snowfall()
+
+# LAKE
+
+
+
+turtle.done()
