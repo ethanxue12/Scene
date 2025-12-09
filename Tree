@@ -1,0 +1,51 @@
+import turtle as trtl
+def print_tree():
+    # Setup screen
+    wn = trtl.Screen()
+    # Setup turtle
+    t = trtl.Turtle()
+    t.speed(0)
+    t.color("brown")
+    t.turtlesize(1)
+
+    #Function to draw branches
+    def draw_branch(length, thickness):
+        if length < 15: 
+            t.color("green")
+            
+            # Draw the leaf shape
+            t.begin_fill()
+            t.circle(17)
+            t.end_fill()
+            t.forward(length)
+            t.backward(length) 
+            # Change color back to brown
+            t.color("brown")
+            return()
+        # Draw main branch
+        t.pensize(thickness)
+        t.forward(length)
+        # Left branch
+        t.left(35)
+        draw_branch(length - 23, thickness - 0.8) 
+        # Middle branch (straight up)
+        t.right(35)
+        draw_branch(length - 23, thickness - 0.8) 
+        # Right branch
+        t.right(35)
+        draw_branch(length - 23, thickness - 0.8) 
+        # Return to original heading
+        t.left(35)
+        t.backward(length)
+    # Move turtle to starting position
+    t.penup()
+    t.goto(0, -250)
+    t.pendown()
+    t.left(90)  # Point upwards
+    # Draw the tree
+    draw_branch(100, 10)
+    t.penup()
+    t.goto(0,30)
+    # Keep the window open
+    wn.mainloop()
+print_tree()
