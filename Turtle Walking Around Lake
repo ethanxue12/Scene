@@ -1,0 +1,24 @@
+import turtle
+
+# Setup screen
+wn = turtle.Screen()
+wn.tracer(0)
+
+# Create turtle
+t = turtle.Turtle()
+t.shape("turtle")
+t.color("green")
+t.penup()
+t.setheading(90)  # initial direction
+
+# Function to move in a circle smoothly
+def move_circle():
+    t.forward(1)     # small step for smooth motion
+    t.right(1)       # turn slightly to make a circular path
+    wn.update()      # update the screen
+    wn.ontimer(move_circle, 10)  # repeat every 10ms
+
+# Start moving
+move_circle()
+
+wn.mainloop()
